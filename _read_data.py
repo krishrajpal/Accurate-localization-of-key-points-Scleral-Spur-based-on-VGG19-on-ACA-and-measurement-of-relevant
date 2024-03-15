@@ -2,8 +2,6 @@ import pandas  as pd
 import numpy as np
 import random
 
-
-
 def read_train_data():
 
     x_train = np.load('x_train.npy')

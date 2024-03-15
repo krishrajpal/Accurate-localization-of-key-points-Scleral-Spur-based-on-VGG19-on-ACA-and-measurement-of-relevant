@@ -4,14 +4,38 @@ import cv2
 import glob
 import random
 import  os
+import csv
 
-pathes = glob.glob('data1/*.jpg')
+pathes = []
 img_crop_total = []
 label_crop_total = []
 labels = []
-with open('location1.txt') as f:
-    for x in f.readlines():
-        labels.append([int(i) for i in x.strip().split(' ')])
+
+
+# Define the path to your CSV file
+csv_file_path = 'your_file.csv'
+# Read the CSV file
+with open(csv_file_path, 'r') as file:
+    # Create a CSV reader object
+    csv_reader = csv.reader(file)
+    
+    # Skip the header row if it exists
+    next(csv_reader)
+    
+    # Read each row in the CSV file
+    for row in csv_reader:
+        # Extract data from the row
+        image_id = int(row[0])
+        left_ss_x = int(row[1])
+        left_ss_y = int(row[2])
+        right_ss_x = int(row[3])
+        right_ss_y = int(row[4])
+        
+        # Append the data to respective lists
+        pathes.append(image_id)
+        pathes.append(image_id)
+        labels.append([left_ss_x, left_ss_y])
+        labels.append([right_ss_x, right_ss_y])
 
 for idx, path in enumerate(pathes):
     iidx = int(path.split('\\')[1].split('.')[0]) - 1
