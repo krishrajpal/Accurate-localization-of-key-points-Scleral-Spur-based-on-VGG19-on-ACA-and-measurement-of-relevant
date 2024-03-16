@@ -13,13 +13,13 @@ def calculate_new_coordinates(original_x, original_y):
     width = 496
     middle = width // 2
     if original_x < middle:
-        return original_x, original_y
+        return [original_x, original_y]
     else:
         new_x = width - original_x - 1
-        return new_x, original_y
+        return [new_x, original_y]
 
 # Define the path to your CSV file
-csv_file_path = "/workspaces/Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant/Scleral Spur Coordiantes_Manual  - Sheet1.csv"
+csv_file_path = "E:\Projects\Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant\Scleral Spur Coordiantes_Manual  - Sheet1.csv"
 # Read the CSV file
 with open(csv_file_path, 'r') as file:
     # Create a CSV reader object
@@ -38,16 +38,19 @@ with open(csv_file_path, 'r') as file:
         right_ss_y = int(row[4])
         
         # Append the data to respective lists
-        pathes.append("output_folder/" + image_id + "_left_half.png")
-        pathes.append("output_folder/" + image_id + "_mirrored_right_half.png")
+        pathes.append("output_folder/" + str(image_id) + "_left_half.png")
+        pathes.append("output_folder/" + str(image_id) + "_mirrored_right_half.png")
         labels.append([left_ss_x, left_ss_y])
-        labels.append([calculate_new_coordinates(right_ss_x, right_ss_y)])
+        labels.append(calculate_new_coordinates(right_ss_x, right_ss_y))
 
 
 for idx, path in enumerate(pathes):
-    iidx = int(path.split('\\')[1].split('.')[0]) - 1
+    # iidx = int(path.split('\\')[1].split('.')[0]) - 1
+    # print(pathes)
+    # print(labels)
     img = cv2.imread(path)
-    if img.shape[0] == 280:
+    # print(img.shape)
+    if img.shape[0] == 248:
         for i in range(5):
             # 进行中心的crop
             if i != 0:
@@ -56,7 +59,9 @@ for idx, path in enumerate(pathes):
                 random_scale_x = random.randrange(0, int(x - 224))
                 random_scale_y = random.randrange(0, int(y - 224))
                 img_crop = img[random_scale_y:random_scale_y + 224, random_scale_x:random_scale_x + 224, :]
-                label = [labels[idx][0] - random_scale_x, labels[idx][1] - random_scale_y]
+                val1 = labels[idx][0] - random_scale_x
+                val2 = labels[idx][1] - random_scale_y
+                label = [val1, val2]
                 img_crop_total.append(img_crop)
                 label_crop_total.append(label)
             else:
