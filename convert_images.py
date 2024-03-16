@@ -15,16 +15,7 @@ def separate_and_mirror(image_path):
 
     # Mirror the right half
     mirrored_right_half = right_half.transpose(Image.FLIP_LEFT_RIGHT)
-
-    # Calculate new coordinates for a pixel given its original location
-    def calculate_new_coordinates(original_x, original_y):
-        if original_x < middle:
-            return original_x, original_y
-        else:
-            new_x = width - original_x - 1
-            return new_x, original_y
-
-    return left_half, mirrored_right_half, calculate_new_coordinates
+    return left_half, mirrored_right_half
 
 
 def process_folder(input_folder, output_folder):
@@ -36,7 +27,7 @@ def process_folder(input_folder, output_folder):
     for filename in os.listdir(input_folder):
         if filename.endswith(".png") or filename.endswith(".PNG"):
             input_image_path = os.path.join(input_folder, filename)
-            left_half, mirrored_right_half, _ = separate_and_mirror(input_image_path)
+            left_half, mirrored_right_half = separate_and_mirror(input_image_path)
 
             # Save the resulting images
             left_half.save(os.path.join(output_folder, f"{os.path.splitext(filename)[0]}_left_half.png"))
@@ -44,8 +35,8 @@ def process_folder(input_folder, output_folder):
 
 
 def main():
-    input_folder = "input_folder"
-    output_folder = "output_folder"
+    input_folder = "/workspaces/Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant/input_folder/Segmented_Images"
+    output_folder = "/workspaces/Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant/output_folder"
     process_folder(input_folder, output_folder)
 
 
