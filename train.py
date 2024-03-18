@@ -3,11 +3,12 @@ import numpy as np
 import cv2
 import glob
 import random
-from Network import network
+from Networks import network
 from tensorlayer.layers import *
 import tensorlayer as tl
 import os
 from _read_data import read_train_data, read_test_data
+tf.compat.v1.disable_eager_execution()
 
 lr_init = 1e-5
 batch_size = 64

@@ -3,9 +3,8 @@ import numpy as np
 import random
 
 def read_train_data():
-
-    x_train = np.load('x_train.npy')
-    y_train = np.load('y_train.npy')
+    x_train = np.load('/project/npy/x_train.npy')
+    y_train = np.load('/project/npy/y_train.npy')
     index = np.arange(0, len(x_train))
     random.shuffle(index)
     x_train_shuffle = x_train[index]
@@ -16,8 +15,8 @@ def read_train_data():
 
 def read_test_data():
 
-    x_test = np.load('x_test.npy')
-    y_test = np.load('y_test.npy')
+    x_test = np.load('npy/x_test.npy')
+    y_test = np.load('npy/y_test.npy')
     index = np.arange(0, len(x_test))
     random.shuffle(index)
     x_test_shuffle = x_test[index]
