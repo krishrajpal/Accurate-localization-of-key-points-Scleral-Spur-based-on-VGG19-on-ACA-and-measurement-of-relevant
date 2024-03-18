@@ -7,7 +7,7 @@ from tensorlayer.layers import *
 def network(x, reuse):
 
     VGG_MEAN = [103.939, 116.779, 123.68]
-    with tf.variable_scope('VGG_19', reuse=reuse):
+    with tf.compat.v1.variable_scope('VGG_19', reuse=reuse):
         b, g, r = tf.split(x, 3, 3)
         bgr = tf.concat([b - VGG_MEAN[0], g - VGG_MEAN[1], r - VGG_MEAN[2]], axis=3)
         assert bgr.get_shape().as_list()[1:] == [224, 224, 3]

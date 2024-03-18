@@ -1,104 +1,12 @@
 TensorFlow 2.0 Upgrade Script
 -----------------------------
-Converted 6 files
-Detected 8 issues that require attention
+Converted 0 files
+Detected 0 issues that require attention
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-File: ./train_dropout.py
---------------------------------------------------------------------------------
-./train_dropout.py:119:16: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-File: ./train.py
---------------------------------------------------------------------------------
-./train.py:110:16: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-File: ./convert_images.py
---------------------------------------------------------------------------------
-./convert_images.py:33:12: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-./convert_images.py:34:12: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-File: ./save_data.py
---------------------------------------------------------------------------------
-./save_data.py:101:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-./save_data.py:102:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-./save_data.py:103:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-./save_data.py:104:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
 ================================================================================
 Detailed log follows:
 
 ================================================================================
 ================================================================================
-Input tree: '.'
+Input tree: 'my_project/'
 ================================================================================
---------------------------------------------------------------------------------
-Processing file './Network.py'
- outputting to 'my_project_v2/Network.py'
---------------------------------------------------------------------------------
-
-10:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-Processing file './_read_data.py'
- outputting to 'my_project_v2/_read_data.py'
---------------------------------------------------------------------------------
-
-
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-Processing file './train_dropout.py'
- outputting to 'my_project_v2/train_dropout.py'
---------------------------------------------------------------------------------
-
-14:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-15:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-17:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-25:16: INFO: Changing keep_prob arg of tf.nn.dropout to rate
-
-29:16: INFO: Changing keep_prob arg of tf.nn.dropout to rate
-
-36:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
-38:14: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
-44:11: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
-47:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
-115:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
-119:16: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-Processing file './train.py'
- outputting to 'my_project_v2/train.py'
---------------------------------------------------------------------------------
-
-14:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-15:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-17:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
-36:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
-38:14: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
-44:11: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
-47:16: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
-106:20: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
-110:16: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-Processing file './convert_images.py'
- outputting to 'my_project_v2/convert_images.py'
---------------------------------------------------------------------------------
-
-33:12: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-34:12: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-Processing file './save_data.py'
- outputting to 'my_project_v2/save_data.py'
---------------------------------------------------------------------------------
-
-101:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-102:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-103:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
-104:0: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
---------------------------------------------------------------------------------
-

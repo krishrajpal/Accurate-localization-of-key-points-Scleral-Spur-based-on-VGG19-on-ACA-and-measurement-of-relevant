@@ -11,10 +11,10 @@ from _read_data import read_train_data, read_test_data
 
 lr_init = 1e-5
 batch_size = 64
-x = tf.placeholder('float32', [None, 224, 224, 3])
-y = tf.placeholder('float32', [None, 2])
+x = tf.compat.v1.placeholder('float32', [None, 224, 224, 3])
+y = tf.compat.v1.placeholder('float32', [None, 2])
 
-keep_prob = tf.placeholder('float32')
+keep_prob = tf.compat.v1.placeholder('float32')
 
 def train(is_training):
 
@@ -33,18 +33,18 @@ def train(is_training):
     ##### ======================== DEFINE_TRAIN_OP =================###
     mse_loss = tl.cost.mean_squared_error(ft_output.outputs, y, is_mean=True)
 
-    with tf.variable_scope('learning_rate'):
+    with tf.compat.v1.variable_scope('learning_rate'):
         lr_v = tf.Variable(lr_init, trainable=False)
-    d_optim = tf.train.AdamOptimizer(lr_v, beta1=0.9).minimize(mse_loss)
+    d_optim = tf.compat.v1.train.AdamOptimizer(lr_v, beta1=0.9).minimize(mse_loss)
     correct_pred = tf.sqrt(tf.abs(y[:, 0] - ft_output.outputs[:, 0])**2 + tf.abs(y[:, 1] - ft_output.outputs[:, 1]) ** 2) <= 15
     accur = tf.reduce_mean(tf.cast(correct_pred, 'float'))
 
     ##### ===================== load checkpoint  ============ ###
     # sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False))
-    sess = tf.Session()
+    sess = tf.compat.v1.Session()
     tl.layers.initialize_global_variables(sess)
     if tf.train.get_checkpoint_state('model'):
-        saver = tf.train.Saver()
+        saver = tf.compat.v1.train.Saver()
         saver.restore(sess, './model/latest')
 
     #### ============== load vgg params ============== #####
@@ -103,7 +103,7 @@ def train(is_training):
 
 
             # 如果迭代了两次保存结果
-            saver = tf.train.Saver()
+            saver = tf.compat.v1.train.Saver()
             if not os.path.exists('model/'):
                 os.makedirs('model/')
             if e % 20 == 0:
