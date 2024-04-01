@@ -5,8 +5,7 @@ import  os
 import csv
 
 pathes = []
-img_crop_total = []
-label_crop_total = []
+images = []
 labels = []
 
 def calculate_new_coordinates(original_x, original_y):
@@ -19,7 +18,7 @@ def calculate_new_coordinates(original_x, original_y):
         return [new_x, original_y]
 
 # Define the path to your CSV file
-csv_file_path = "E:\Projects\Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant\Scleral Spur Coordiantes_Manual  - Sheet1.csv"
+csv_file_path = "/Users/swc/Desktop/projects/project/Scleral Spur Coordiantes_Manual  - Sheet1.csv"
 # Read the CSV file
 with open(csv_file_path, 'r') as file:
     # Create a CSV reader object
@@ -49,51 +48,27 @@ for idx, path in enumerate(pathes):
     # print(pathes)
     # print(labels)
     img = cv2.imread(path)
-    # print(img.shape)
-    if img.shape[0] == 248:
-        for i in range(5):
-            # 进行中心的crop
-            if i != 0:
-                x = img.shape[0]
-                y = img.shape[1]
-                random_scale_x = random.randrange(0, int(x - 224))
-                random_scale_y = random.randrange(0, int(y - 224))
-                img_crop = img[random_scale_y:random_scale_y + 224, random_scale_x:random_scale_x + 224, :]
-                val1 = labels[idx][0] - random_scale_x
-                val2 = labels[idx][1] - random_scale_y
-                label = [val1, val2]
-                img_crop_total.append(img_crop)
-                label_crop_total.append(label)
-            else:
-                x = img.shape[0]
-                y = img.shape[1]
-                scale_x = int((x - 224) / 2)
-                scale_y = int((y - 224) / 2)
-                img_crop = img[scale_y:scale_y + 224, scale_x:scale_x + 224]
-                img_crop_total.append(img_crop)
-                label = [labels[idx][0] - scale_x, labels[idx][1] - scale_y]
-                label_crop_total.append(label)
-    else:
-        img_crop_total.append(img)
-        label_crop_total.append(labels[idx])
+    images.append(img)
 
-# 进行洗牌操作
-index = np.arange(0, len(img_crop_total))
-random.shuffle(index)
-x = np.array(img_crop_total)
-y = np.array(label_crop_total)
-x_shuffle = x[index]
-y_shuffle = y[index]
+
+
+x = np.array(images)
+y = np.array(labels)
+# x_shuffle = x[index]
+# y_shuffle = y[index]
 # print(np.shape(img_crop_total))
 # # print(np.shape(label_crop_total))
 
-print(x_shuffle[0:3].shape)
+print(x[0:3].shape)
+print(x.shape)
+print(y[0:3].shape)
+print(y.shape)
 # 拆分成训练集和测试集数据
 p = int(len(x) * 0.85)
-train_x = x_shuffle[:p]
-train_y = y_shuffle[:p]
-test_x = x_shuffle[p:]
-test_y = y_shuffle[p:]
+train_x = x[:p]
+train_y = y[:p]
+test_x = x[p:]
+test_y = y[p:]
 
 
 if not os.path.exists('npy'):
