@@ -50,6 +50,7 @@ for image_path in image_paths:
                 random_scale_y = random.randrange(0, int(y - 224))
                 img_crop = img[random_scale_y:random_scale_y + 224, random_scale_x:random_scale_x + 224, :]
                 label = [labels[k][0] - random_scale_x, labels[k][1] - random_scale_y]
+
                 img_crop_total.append(img_crop)
                 label_crop_total.append(label)
             else:
@@ -58,8 +59,8 @@ for image_path in image_paths:
                 scale_x = int((x - 224) / 2)
                 scale_y = int((y - 224) / 2)
                 img_crop = img[scale_y:scale_y + 224, scale_x:scale_x + 224]
-                img_crop_total.append(img_crop)
                 label = [labels[k][0] - scale_x, labels[k][1] - scale_y]
+                img_crop_total.append(img_crop)
                 label_crop_total.append(label)
         k += 1
     else:

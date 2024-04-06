@@ -18,7 +18,7 @@ def calculate_new_coordinates(original_x, original_y):
         return [new_x, original_y]
 
 # Define the path to your CSV file
-csv_file_path = "/Users/swc/Desktop/projects/project/Scleral Spur Coordiantes_Manual  - Sheet1.csv"
+csv_file_path = "Scleral Spur Coordiantes_Manual  - Sheet1.csv"
 # Read the CSV file
 with open(csv_file_path, 'r') as file:
     # Create a CSV reader object
