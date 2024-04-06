@@ -24,6 +24,7 @@ def calculate_new_coordinates(original_x, original_y):
 labels = []
 with open(label_csv, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
+    next(csvreader)
     for row in csvreader:
         left_ss_x = int(row[1])
         left_ss_y = int(row[2])
@@ -34,10 +35,9 @@ with open(label_csv, 'r') as csvfile:
 
 img_crop_total = []
 label_crop_total = []
+k = 0
 
 for image_path in image_paths:
-    # Extract filename without extension
-    image_filename = os.path.basename(image_path).split('.')[0]
     # Load image using OpenCV
     img = cv2.imread(image_path)
 
@@ -49,7 +49,7 @@ for image_path in image_paths:
                 random_scale_x = random.randrange(0, int(x - 224))
                 random_scale_y = random.randrange(0, int(y - 224))
                 img_crop = img[random_scale_y:random_scale_y + 224, random_scale_x:random_scale_x + 224, :]
-                label = [labels[image_filename][0] - random_scale_x, labels[image_filename][1] - random_scale_y]
+                label = [labels[k][0] - random_scale_x, labels[k][1] - random_scale_y]
                 img_crop_total.append(img_crop)
                 label_crop_total.append(label)
             else:
@@ -59,11 +59,12 @@ for image_path in image_paths:
                 scale_y = int((y - 224) / 2)
                 img_crop = img[scale_y:scale_y + 224, scale_x:scale_x + 224]
                 img_crop_total.append(img_crop)
-                label = [labels[image_filename][0] - scale_x, labels[image_filename][1] - scale_y]
+                label = [labels[k][0] - scale_x, labels[k][1] - scale_y]
                 label_crop_total.append(label)
+        k += 1
     else:
         img_crop_total.append(img)
-        label_crop_total.append(labels[image_filename])
+        label_crop_total.append(labels[k])
 
 # Shuffle data
 index = np.arange(0, len(img_crop_total))
