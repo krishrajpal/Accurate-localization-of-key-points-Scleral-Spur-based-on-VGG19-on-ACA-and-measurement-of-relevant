@@ -23,10 +23,8 @@ csv_file_path = "/Users/swc/Desktop/projects/project/Scleral Spur Coordiantes_Ma
 with open(csv_file_path, 'r') as file:
     # Create a CSV reader object
     csv_reader = csv.reader(file)
-    
     # Skip the header row if it exists
     next(csv_reader)
-    
     # Read each row in the CSV file
     for row in csv_reader:
         # Extract data from the row
