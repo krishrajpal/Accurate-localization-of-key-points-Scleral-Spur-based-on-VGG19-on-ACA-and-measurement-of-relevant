@@ -35,7 +35,6 @@ def main():
 
         
         if st.button('Predict'):
-            print(filename)
             if filename in filename_mapping:
                 output_image_filename = filename_mapping[filename]
                 output_image = cv2.imread("output/" + output_image_filename)
@@ -51,7 +50,7 @@ def main():
                 thickness = -1  # Filled circle
                 cv2.circle(image_opencv, (int(x), int(y)), radius, color, thickness)
     
-                st.image(image_opencv, caption='Predicted Image', width=300)
+                st.image(image_opencv, caption='Predicted Image', width=300, channels='BGR')
 
 if __name__ == "__main__":
     main()
