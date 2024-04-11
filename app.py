@@ -4,46 +4,33 @@ import numpy as np
 import cv2
 import json
 import os
+from PIL import Image
 
 filename_mapping = {
     "20240404_130420.jpg": "20240404_111943.jpg",
-    "image2.jpg": "output2.jpg",
 }
 
-# Load the TensorFlow model
-@st.cache(allow_output_mutation=True)
+@st.cache_resource()
 def load_model(model_path):
     model = tf.keras.models.load_model(model_path)
     return model
 
 # Function to predict coordinates
 def predict_coordinates(image):
-    # Placeholder for prediction logic
-    # For demonstration purposes, just returning random coordinates
-    # x = np.random.randint(0, image.shape[1])
-    # y = np.random.randint(0, image.shape[0])
-    
-    model = load_model("/Users/krishrajpal/Documents/BTP_MedicalSegmentation/SSL_VGG19/vgg19_coordinates_model_2.h5")
-
-            # Preprocess the image
-    img_array = np.array(image.resize((224, 224))) / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
-
-    #         # Make prediction
-    prediction = model.predict(img_array)
-    print(prediction)
-    return prediction[0], prediction[1]
+    model = load_model("vgg19_coordinates_model_2.h5")
+    prediction = model.predict(image)
+    return prediction[0][0], prediction[0][1]
 
 # Main Streamlit app
 def main():
-    # Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant
     st.title("Accurate localization of key points Scleral Spur based on VGG19 on ACA and measurement of relevant")
-    # st.title("TensorFlow Model Deployment with Streamlit")
-    uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+    uploaded_image = st.file_uploader("Upload an image", type=["png"])
 
     if uploaded_image is not None:
-        image = cv2.imdecode(np.fromstring(uploaded_image.read(), np.uint8), 1)
-        st.image(image, caption='Uploaded Image', width=300, channels='BGR')
+        image_pil_1 = Image.open(uploaded_image)
+        image_pil = image_pil_1.save("img.png")
+
+        st.image(image_pil_1, caption='Uploaded Image', width=300, channels='BGR')
         filename = os.path.basename(uploaded_image.name)
 
         
@@ -54,16 +41,17 @@ def main():
                 output_image = cv2.imread("output/" + output_image_filename)
                 st.image(output_image, caption='Predicted Image', use_column_width=True, channels='BGR')
             else:
-                x, y = predict_coordinates(image)
+                image_opencv = cv2.imread("img.png")
+                x_2 = np.array([image_opencv])
+                x_2 = x_2.astype('float32') / 255.0
+                x, y = predict_coordinates(x_2)
                 st.write(f"Predicted Coordinates: ({x}, {y})")
-
-                # Draw a colored circle on the image at predicted coordinates
-                color = (0, 255, 0)  # Green color
-                radius = 5
+                color = (255, 255, 255)  # White color
+                radius = 2
                 thickness = -1  # Filled circle
-                cv2.circle(image, (x, y), radius, color, thickness)
+                cv2.circle(image_opencv, (int(x), int(y)), radius, color, thickness)
     
-                st.image(image, caption='Predicted Image', use_column_width=True)
+                st.image(image_opencv, caption='Predicted Image', width=300)
 
 if __name__ == "__main__":
     main()
