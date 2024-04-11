@@ -1,5 +1,5 @@
 import streamlit as st
-# import tensorflow as tf
+import tensorflow as tf
 import numpy as np
 import cv2
 import json
@@ -11,27 +11,28 @@ filename_mapping = {
 }
 
 # Load the TensorFlow model
-# @st.cache(allow_output_mutation=True)
-# def load_model(model_path):
-#     model = tf.keras.models.load_model(model_path)
-#     return model
+@st.cache(allow_output_mutation=True)
+def load_model(model_path):
+    model = tf.keras.models.load_model(model_path)
+    return model
 
 # Function to predict coordinates
 def predict_coordinates(image):
     # Placeholder for prediction logic
     # For demonstration purposes, just returning random coordinates
-    x = np.random.randint(0, image.shape[1])
-    y = np.random.randint(0, image.shape[0])
+    # x = np.random.randint(0, image.shape[1])
+    # y = np.random.randint(0, image.shape[0])
     
-    # model = load_model("model1.h5")
+    model = load_model("/Users/krishrajpal/Documents/BTP_MedicalSegmentation/SSL_VGG19/vgg19_coordinates_model_2.h5")
 
             # Preprocess the image
-    # img_array = np.array(image.resize((224, 224))) / 255.0
-    # img_array = np.expand_dims(img_array, axis=0)
+    img_array = np.array(image.resize((224, 224))) / 255.0
+    img_array = np.expand_dims(img_array, axis=0)
 
     #         # Make prediction
-    # prediction = model.predict(img_array)
-    return x, y
+    prediction = model.predict(img_array)
+    print(prediction)
+    return prediction[0], prediction[1]
 
 # Main Streamlit app
 def main():
