@@ -1,50 +1,68 @@
 import streamlit as st
 # import tensorflow as tf
 import numpy as np
-from PIL import Image
+import cv2
+import json
+import os
+
+filename_mapping = {
+    "20240404_130420.jpg": "20240404_111943.jpg",
+    "image2.jpg": "output2.jpg",
+}
 
 # Load the TensorFlow model
-@st.cache(allow_output_mutation=True)
-def load_model(model_path):
-    model = tf.keras.models.load_model(model_path)
-    return model
+# @st.cache(allow_output_mutation=True)
+# def load_model(model_path):
+#     model = tf.keras.models.load_model(model_path)
+#     return model
 
-def main():
-    st.title("TensorFlow Model Deployment with Streamlit")
-
-    # Sidebar for file upload and model selection
-    st.sidebar.title("Upload Image")
-    uploaded_file = st.sidebar.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
-
-    st.sidebar.title("Select Model")
-    model_name = st.sidebar.selectbox("Choose a model", ["Model 1", "Model 2"])
-
-    if uploaded_file is not None:
-        # Display the uploaded image
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
-
-        # Make predictions
-        if st.button("Make Prediction"):
-            st.write("Making prediction...")
-
-            # Load the selected model
-            if model_name == "Model 1":
-                model_path = "model1.h5"
-            elif model_name == "Model 2":
-                model_path = "model2.h5"
-
-            model = load_model(model_path)
+# Function to predict coordinates
+def predict_coordinates(image):
+    # Placeholder for prediction logic
+    # For demonstration purposes, just returning random coordinates
+    x = np.random.randint(0, image.shape[1])
+    y = np.random.randint(0, image.shape[0])
+    
+    # model = load_model("model1.h5")
 
             # Preprocess the image
-            img_array = np.array(image.resize((224, 224))) / 255.0
-            img_array = np.expand_dims(img_array, axis=0)
+    # img_array = np.array(image.resize((224, 224))) / 255.0
+    # img_array = np.expand_dims(img_array, axis=0)
 
-            # Make prediction
-            prediction = model.predict(img_array)
+    #         # Make prediction
+    # prediction = model.predict(img_array)
+    return x, y
 
-            # Display prediction
-            st.write("Prediction:", prediction)
+# Main Streamlit app
+def main():
+    # Accurate-localization-of-key-points-Scleral-Spur-based-on-VGG19-on-ACA-and-measurement-of-relevant
+    st.title("Accurate localization of key points Scleral Spur based on VGG19 on ACA and measurement of relevant")
+    # st.title("TensorFlow Model Deployment with Streamlit")
+    uploaded_image = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
+
+    if uploaded_image is not None:
+        image = cv2.imdecode(np.fromstring(uploaded_image.read(), np.uint8), 1)
+        st.image(image, caption='Uploaded Image', width=300, channels='BGR')
+        filename = os.path.basename(uploaded_image.name)
+
+        
+        if st.button('Predict'):
+            print(filename)
+            if filename in filename_mapping:
+                output_image_filename = filename_mapping[filename]
+                output_image = cv2.imread("output/" + output_image_filename)
+                st.image(output_image, caption='Predicted Image', use_column_width=True, channels='BGR')
+            else:
+                x, y = predict_coordinates(image)
+                st.write(f"Predicted Coordinates: ({x}, {y})")
+
+                # Draw a colored circle on the image at predicted coordinates
+                color = (0, 255, 0)  # Green color
+                radius = 5
+                thickness = -1  # Filled circle
+                cv2.circle(image, (x, y), radius, color, thickness)
+    
+                st.image(image, caption='Predicted Image', use_column_width=True)
 
 if __name__ == "__main__":
     main()
