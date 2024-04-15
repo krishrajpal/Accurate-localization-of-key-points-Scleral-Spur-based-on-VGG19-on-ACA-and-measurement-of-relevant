@@ -72,7 +72,7 @@ def main():
                 else:
                     x_right, y_right = calculate_new_coordinates(df.iloc[image_number+1,3], df.iloc[image_number+1,4])
                     cv2.circle(image_opencv, (int(x_right), int(y_right)), 3, (0,165,255), -1)
-                st.write(f"Predicted Coordinates: ({x}, {y})")
+                st.write(f"Predicted Coordinates: ({int(x)}, {int(y)})")
                 color = (255, 255, 255)  # White color
                 radius = 2
                 thickness = -1  # Filled circle
