@@ -66,7 +66,7 @@ def main():
                 image_para = Image.open("img.png")
                 x_2 = np.array([image_opencv])
                 x_2 = x_2.astype('float32') / 255.0
-                # x, y = predict_coordinates(x_2)
+                x, y = predict_coordinates(x_2)
                 if(side == "left"):
                     x_left = df.iloc[image_number, 1]
                     y_left = df.iloc[image_number,2]
@@ -87,7 +87,7 @@ def main():
                 thickness = -1  # Filled circle
                 cv2.circle(image_opencv, (int(x), int(y)), radius, color, thickness)
                 st.image(image_opencv, caption='Predicted Image', width=300, channels='BGR')
-                st.write(f"Pixels on Arc: {parameters.pixelCount_left(label1,x,y)}")
+                # st.write(f"Pixels on Arc: {parameters.pixelCount_left(label1,x,y)}")
 
 if __name__ == "__main__":
     main()
