@@ -5,14 +5,11 @@ def separate_and_mirror(image_path):
     # Open the image
     image = Image.open(image_path)
     width, height = image.size
-
     # Calculate the middle point
     middle = width // 2
-
     # Separate the image into left and right halves
     left_half = image.crop((0, 0, middle, height))
     right_half = image.crop((middle, 0, width, height))
-
     # Mirror the right half
     mirrored_right_half = right_half.transpose(Image.FLIP_LEFT_RIGHT)
     return left_half, mirrored_right_half
